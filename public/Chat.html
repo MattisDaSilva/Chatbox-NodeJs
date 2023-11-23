@@ -14,28 +14,46 @@
             <h2>Salon principal</h2>
             <a href="index.html" class="submit" type="submit" value="Retour">Retour</a>
         </div>
-        <div class="chan">
+        <div class="chan" id="messageArea"></div>
 
-            <div class="messages">
-                <h3 id="inputValueTitle"></h3>
-                <p id="message"></p>
-                <p id="date" ></p>
-            </div>
-
-        </div>
-
-            <div class="sendmsg">
-                <input type="text" placeholder="Envoyer un message">
-                <input class="submit" type="submit" value="Envoyer" />
-            </div>
-
+        <form id="form">
+            <input type="text" placeholder="Message" id="message">
+            <button type="submit">Send</button>
+        </form>
     </section>
 
+    <script src="/socket.io/socket.io.js"></script>
     <script>
+        let socket = io();
+
+        let form = document.getElementById('form');
+        let message = document.getElementById('message');
+        let messageArea = document.getElementById("messageArea");
         const urlParams = new URLSearchParams(window.location.search);
         const inputValue = urlParams.get('inputValue');
-        console.log('Username :', inputValue);
-        document.getElementById('inputValueTitle').innerText = `${inputValue}`;
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            if (message.value) {
+                socket.emit('send name', inputValue);
+                socket.emit('send message', message.value);
+                message.value = "";
+            }
+        });
+
+        socket.on("send name", (username) => {
+            let name = document.createElement("p");
+            name.textContent = username + ":";
+            messageArea.appendChild(name);
+        });
+
+        socket.on("send message", (chat) => {
+            let chatContent = document.createElement("p");
+            chatContent.textContent = chat;
+            messageArea.appendChild(chatContent);
+        });
+
     </script>
 </body>
 
