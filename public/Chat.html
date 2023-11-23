@@ -36,22 +36,28 @@
             e.preventDefault();
 
             if (message.value) {
-                socket.emit('send name', inputValue);
-                socket.emit('send message', message.value);
+                socket.emit('send message', { username: inputValue, message: message.value });
                 message.value = "";
             }
         });
+        
+        socket.on("send message", (data) => {
+            let chatDiv = document.createElement("div");
+            chatDiv.style.backgroundColor = "#e0e0e0";
+            chatDiv.style.padding = "10px";
+            chatDiv.style.marginTop = "5px";
 
-        socket.on("send name", (username) => {
-            let name = document.createElement("p");
-            name.textContent = username + ":";
-            messageArea.appendChild(name);
-        });
+            let username = document.createElement("p");
+            username.style.fontWeight = "bold";
+            username.textContent = data.username;
 
-        socket.on("send message", (chat) => {
-            let chatContent = document.createElement("p");
-            chatContent.textContent = chat;
-            messageArea.appendChild(chatContent);
+            let messageContent = document.createElement("p");
+            messageContent.textContent = data.message;
+
+            chatDiv.appendChild(username);
+            chatDiv.appendChild(messageContent);
+            
+            messageArea.appendChild(chatDiv);
         });
 
     </script>
