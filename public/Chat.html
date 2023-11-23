@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/styles.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatBox</title>
 </head>
@@ -17,8 +18,8 @@
         <div class="chan" id="messageArea"></div>
 
         <form id="form">
-            <input type="text" placeholder="Message" id="message">
-            <button type="submit">Send</button>
+            <input type="text"  autocomplete="off" placeholder="Message" id="message">
+            <button type="submit"><i class='bx bxs-send bx-flashing' ></i></button>
         </form>
     </section>
 
@@ -36,28 +37,22 @@
             e.preventDefault();
 
             if (message.value) {
-                socket.emit('send message', { username: inputValue, message: message.value });
+                socket.emit('send name', inputValue);
+                socket.emit('send message', message.value);
                 message.value = "";
             }
         });
-        
-        socket.on("send message", (data) => {
-            let chatDiv = document.createElement("div");
-            chatDiv.style.backgroundColor = "#e0e0e0";
-            chatDiv.style.padding = "10px";
-            chatDiv.style.marginTop = "5px";
 
-            let username = document.createElement("p");
-            username.style.fontWeight = "bold";
-            username.textContent = data.username;
+        socket.on("send name", (username) => {
+            let name = document.createElement("p");
+            name.textContent = username;
+            messageArea.appendChild(name);
+        });
 
-            let messageContent = document.createElement("p");
-            messageContent.textContent = data.message;
-
-            chatDiv.appendChild(username);
-            chatDiv.appendChild(messageContent);
-            
-            messageArea.appendChild(chatDiv);
+        socket.on("send message", (chat) => {
+            let chatContent = document.createElement("p");
+            chatContent.textContent = chat;
+            messageArea.appendChild(chatContent);
         });
 
     </script>
