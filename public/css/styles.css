@@ -1,0 +1,88 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #5c5e66;
+}
+
+body {
+  background-color: #9dade5;
+}
+
+.box {
+  background-color: #e2e7f6;
+  margin: 0 auto;
+  width: 40%;
+  height: 400px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-top: 20vh;
+  border-radius: 20px;
+}
+
+.box h1{
+  margin: 20px 0px 20px;
+}
+
+.box input[type=text] {
+  height: 25px;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 0px;
+  font-size: 16px;
+  background-color: #cbcfdf;
+}
+
+.submit[type=submit]{
+  padding: 10px;
+  border-radius: 10px;
+  border: 0px;
+  background-color: #c7d0f08f;
+  transition: 500ms;
+  text-decoration: none;
+}
+.submit[type=submit]:hover{
+  background-color: #c7d0f0;
+  transition: 500ms;
+}
+
+.app {
+  margin: 0 auto;
+  width: 66%;
+}
+
+.chatname{
+  background-color: #e2e7f6;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chan{
+  background-color: #f0f2f9;
+  height: 86vh;
+  padding: 25px;
+}
+
+.messages{
+  background-color: #e8e8ee;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.sendmsg{
+  padding: 10px;
+  background-color: #f0f2f9;
+}
+
+.sendmsg input[type=text]{
+  width: 85%;
+  font-size: 16px;
+  border-radius: 10px;
+  border: solid 0px;
+  padding: 10px;
+  background-color: #cacfdf;
+}

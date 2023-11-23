@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBox</title>
+</head>
+
+<body>
+    <section class="app">
+        <div class="chatname">
+            <h2>Salon principal</h2>
+            <a href="index.html" class="submit" type="submit" value="Retour">Retour</a>
+        </div>
+        <div class="chan">
+
+            <div class="messages">
+                <h3 id="inputValueTitle"></h3>
+                <p id="message"></p>
+                <p id="date" ></p>
+            </div>
+
+        </div>
+
+            <div class="sendmsg">
+                <input type="text" placeholder="Envoyer un message">
+                <input class="submit" type="submit" value="Envoyer" />
+            </div>
+
+    </section>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const inputValue = urlParams.get('inputValue');
+        console.log('Username :', inputValue);
+        document.getElementById('inputValueTitle').innerText = `${inputValue}`;
+    </script>
+</body>
+
+</html>
