@@ -38,37 +38,48 @@
 
             if (message.value) {
                 let currentTime = new Date().toLocaleTimeString(); // Obtenez l'heure actuelle
-
-                socket.emit('send name', inputValue);
+                
                 socket.emit('send message', { username: inputValue, message: message.value, time: currentTime });
+                socket.emit('send-json');
                 message.value = "";
             }
         });
 
-        socket.on("send message", (data) => {
-            let chatDiv = document.createElement("div");
-            chatDiv.style.backgroundColor = "#e0e0e0";
-            chatDiv.style.padding = "10px";
-            chatDiv.style.marginTop = "5px";
-            chatDiv.style.overflowWrap = "break-word";
 
-            let username = document.createElement("p");
-            username.style.fontWeight = "bold";
-            username.textContent = data.username;
 
-            let messageContent = document.createElement("p");
-            messageContent.textContent = data.message;
+        socket.on('receive-json',(jsonData) =>  {
+        
+            // Affichage des messages existants
+            jsonData.forEach((row) => {
+console.log(row);
 
-            let time = document.createElement("p");
-            time.style.fontSize = "10px"; 
-            time.textContent = data.time;
+                let chatDiv = document.createElement("div");
+                chatDiv.style.backgroundColor = "#e0e0e0";
+                chatDiv.style.padding = "10px";
+                chatDiv.style.marginTop = "5px";
+                chatDiv.style.overflowWrap = "break-word";
 
-            chatDiv.appendChild(username);
-            chatDiv.appendChild(messageContent);
-            chatDiv.appendChild(time);
+                let username = document.createElement("p");
+                username.style.fontWeight = "bold";
+                username.textContent = row.username;
 
-            messageArea.insertBefore(chatDiv, messageArea.firstChild);
+                let messageContent = document.createElement("p");
+                messageContent.textContent = row.content;
+
+                let time = document.createElement("p");
+                time.style.fontSize = "10px";
+                time.textContent = row.hour;
+
+
+                chatDiv.appendChild(username);
+                chatDiv.appendChild(messageContent);
+                chatDiv.appendChild(time);
+
+                messageArea.insertBefore(chatDiv, messageArea.firstChild);
+            });
         });
+
+
 
 
     </script>
