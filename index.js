@@ -82,7 +82,8 @@ io.on('connection', (socket) => {
                 console.error('Erreur lors de la requête MySQL :', err);
             } else {
                 // Envoyer les résultats de la requête MySQL au client
-                socket.emit('receive-json', results);
+                const lastRow = results.length > 0 ? results[results.length - 1] : null;
+                socket.emit('update-json', lastRow);
             }
         });
     });

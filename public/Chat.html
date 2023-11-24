@@ -38,7 +38,7 @@
 
             if (message.value) {
                 let currentTime = new Date().toLocaleTimeString(); // Obtenez l'heure actuelle
-                
+
                 socket.emit('send message', { username: inputValue, message: message.value, time: currentTime });
                 socket.emit('send-json');
                 message.value = "";
@@ -47,11 +47,11 @@
 
 
 
-        socket.on('receive-json',(jsonData) =>  {
-        
+        socket.on('receive-json', (jsonData) => {
+
             // Affichage des messages existants
             jsonData.forEach((row) => {
-console.log(row);
+                console.log(row);
 
                 let chatDiv = document.createElement("div");
                 chatDiv.style.backgroundColor = "#e0e0e0";
@@ -78,6 +78,36 @@ console.log(row);
                 messageArea.insertBefore(chatDiv, messageArea.firstChild);
             });
         });
+
+        socket.on('update-json', (lastRow) => {
+
+            // Affichage des messages existants
+            
+
+                let chatDiv = document.createElement("div");
+                chatDiv.style.backgroundColor = "#e0e0e0";
+                chatDiv.style.padding = "10px";
+                chatDiv.style.marginTop = "5px";
+                chatDiv.style.overflowWrap = "break-word";
+
+                let username = document.createElement("p");
+                username.style.fontWeight = "bold";
+                username.textContent = lastRow.username;
+
+                let messageContent = document.createElement("p");
+                messageContent.textContent = lastRow.content;
+
+                let time = document.createElement("p");
+                time.style.fontSize = "10px";
+                time.textContent = lastRow.hour;
+
+
+                chatDiv.appendChild(username);
+                chatDiv.appendChild(messageContent);
+                chatDiv.appendChild(time);
+
+                messageArea.insertBefore(chatDiv, messageArea.firstChild);
+            });
 
 
 
